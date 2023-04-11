@@ -28,10 +28,13 @@ public class ProfessorController {
 				p.setName(rs.getString("nombre"));
 				p.setFirstSurname(rs.getString("apellido1"));
 				p.setSecondSurname(rs.getString("apellido2"));
+				p.setImage(rs.getBytes("imagen"));
 				p.setDni(rs.getString("dni"));
 				p.setAddress(rs.getString("direccion"));
 				p.setEmail(rs.getString("email"));
 				p.setPhone(rs.getString("telefono"));
+				p.setColor(rs.getString("colorPreferido"));
+				p.setSexTypologyId(rs.getInt("idTipologiaSexo"));
 			}
 			rs.close();
 			ps.close();
@@ -85,15 +88,18 @@ public class ProfessorController {
 		int affectedRows = 0;
 		try {
 			Connection conn = ConnectionManager.getConnection();
-			PreparedStatement ps = conn.prepareStatement("update centroeducativo.profesor set nombre = ?, apellido1 = ?,"
-					+ " apellido2 = ?, dni = ?, direccion = ?, email = ?, telefono = ? where id = " + p.getId());
+			PreparedStatement ps = conn.prepareStatement("update centroeducativo.profesor set nombre = ?, apellido1 = ?, apellido2 = ?, "
+					+ "imagen = ?, dni = ?, direccion = ?, email = ?, telefono = ?, colorPreferido = ?, idTipologiaSexo = ? where id = " + p.getId());
 			ps.setString(1, p.getName());
 			ps.setString(2, p.getFirstSurname());
 			ps.setString(3, p.getSecondSurname());
-			ps.setString(4, p.getDni());
-			ps.setString(5, p.getAddress());
-			ps.setString(6, p.getEmail());
-			ps.setString(7, p.getPhone());
+			ps.setBytes(4, p.getImage());
+			ps.setString(5, p.getDni());
+			ps.setString(6, p.getAddress());
+			ps.setString(7, p.getEmail());
+			ps.setString(8, p.getPhone());
+			ps.setString(9, p.getColor());
+			ps.setInt(10, p.getSexTypologyId());
 			affectedRows = ps.executeUpdate();
 			ps.close();
 			conn.close();
@@ -113,16 +119,19 @@ public class ProfessorController {
 		int affectedRows = 0;
 		try {
 			Connection conn = ConnectionManager.getConnection();
-			PreparedStatement ps = conn.prepareStatement("insert into centroeducativo.profesor (id, nombre, apellido1,"
-					+ " apellido2, dni, direccion, email, telefono) values (?, ?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement ps = conn.prepareStatement("insert into centroeducativo.profesor (id, nombre, apellido1, apellido2, imagen,"
+					+ " dni, direccion, email, telefono, colorPreferido, idTipologiaSexo) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			ps.setInt(1, getNextValid(conn));
 			ps.setString(2, p.getName());
 			ps.setString(3, p.getFirstSurname());
 			ps.setString(4, p.getSecondSurname());
-			ps.setString(5, p.getDni());
-			ps.setString(6, p.getAddress());
-			ps.setString(7, p.getEmail());
-			ps.setString(8, p.getPhone());
+			ps.setBytes(5, p.getImage());
+			ps.setString(6, p.getDni());
+			ps.setString(7, p.getAddress());
+			ps.setString(8, p.getEmail());
+			ps.setString(9, p.getPhone());
+			ps.setString(10, p.getColor());
+			ps.setInt(11, p.getSexTypologyId());
 			affectedRows = ps.executeUpdate();
 			ps.close();
 			conn.close();
@@ -179,7 +188,7 @@ public class ProfessorController {
 		List<Professor> professors = new ArrayList<Professor>();
 		try {
 			Connection conn = ConnectionManager.getConnection();
-			PreparedStatement ps = conn.prepareStatement("select * from centroeducativo.profesor");
+			PreparedStatement ps = conn.prepareStatement("select * from centroeducativo.profesor order by apellido1, apellido2, nombre");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Professor p = new Professor();
@@ -187,10 +196,13 @@ public class ProfessorController {
 				p.setName(rs.getString(2));
 				p.setFirstSurname(rs.getString(3));
 				p.setSecondSurname(rs.getString(4));
-				p.setDni(rs.getString(5));
-				p.setAddress(rs.getString(6));
-				p.setEmail(rs.getString(7));
-				p.setPhone(rs.getString(8));
+				p.setImage(rs.getBytes(5));
+				p.setDni(rs.getString(6));
+				p.setAddress(rs.getString(7));
+				p.setEmail(rs.getString(8));
+				p.setPhone(rs.getString(9));
+				p.setColor(rs.getString(10));
+				p.setSexTypologyId(rs.getInt(11));
 				professors.add(p);
 			}
 			rs.close();

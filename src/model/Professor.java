@@ -6,10 +6,13 @@ public class Professor {
 	private String name;
 	private String firstSurname;
 	private String secondSurname;
+	private byte[] image;
 	private String dni;
 	private String address;
 	private String email;
 	private String phone;
+	private String color;
+	private int sexTypologyId;
 	
 	/**
 	 * 
@@ -23,22 +26,28 @@ public class Professor {
 	 * @param name
 	 * @param firstSurname
 	 * @param secondSurname
+	 * @param image
 	 * @param dni
 	 * @param address
 	 * @param email
 	 * @param phone
+	 * @param color
+	 * @param sexTypologyId
 	 */
-	public Professor(int id, String name, String firstSurname, String secondSurname, String dni, String address,
-			String email, String phone) {
+	public Professor(int id, String name, String firstSurname, String secondSurname, byte[] image,
+			String dni, String address, String email, String phone, String color, int sexTypologyId) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.firstSurname = firstSurname;
 		this.secondSurname = secondSurname;
+		this.image = image;
 		this.dni = dni;
 		this.address = address;
 		this.email = email;
 		this.phone = phone;
+		this.color = color;
+		this.sexTypologyId = sexTypologyId;
 	}
 
 	public int getId() {
@@ -73,6 +82,14 @@ public class Professor {
 		this.secondSurname = secondSurname;
 	}
 
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
 	public String getDni() {
 		return dni;
 	}
@@ -105,9 +122,25 @@ public class Professor {
 		this.phone = phone;
 	}
 
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public int getSexTypologyId() {
+		return sexTypologyId;
+	}
+
+	public void setSexTypologyId(int sexTypologyId) {
+		this.sexTypologyId = sexTypologyId;
+	}
+
 	@Override
 	public String toString() {
-		return name + " " + firstSurname + " " + secondSurname;
+		return firstSurname + " " + secondSurname + ", " + name;
 	}
 
 }

@@ -1,7 +1,9 @@
 package view;
 
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
+import controller.SexTypologyController;
 import controller.StudentController;
 import model.Student;
 
@@ -12,6 +14,7 @@ import javax.swing.JOptionPane;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Font;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -142,10 +145,13 @@ public class StudentPanel extends JPanel {
 			personalInformation.setName(s.getName());
 			personalInformation.setFirstSurname(s.getFirstSurname());
 			personalInformation.setSecondSurname(s.getSecondSurname());
+			personalInformation.setSexTypology(SexTypologyController.getSexTypology(s.getSexTypologyId()));
 			personalInformation.setDni(s.getDni());
 			personalInformation.setAddress(s.getAddress());
 			personalInformation.setEmail(s.getEmail());
 			personalInformation.setPhone(s.getPhone());
+			personalInformation.setColor(s.getColor());
+			personalInformation.setImage(s.getImage());
 		}
 		if (StudentController.getPrevious(personalInformation.getId()) == null) {
 			btnFirst.setEnabled(false);
@@ -163,6 +169,12 @@ public class StudentPanel extends JPanel {
 			btnLast.setEnabled(true);
 			btnNext.setEnabled(true);
 		}
+		if (!personalInformation.getColor().isBlank()) {
+			personalInformation.setBackground(Color.decode(personalInformation.getColor()));
+		}
+		else {
+			personalInformation.setBackground(UIManager.getColor("Panel.background"));
+		}
 	}
 	
 	/**
@@ -174,10 +186,13 @@ public class StudentPanel extends JPanel {
 		s.setName(personalInformation.getName());
 		s.setFirstSurname(personalInformation.getFirstSurname());
 		s.setSecondSurname(personalInformation.getSecondSurname());
+		s.setSexTypologyId(personalInformation.getSexTypology());
 		s.setDni(personalInformation.getDni());
 		s.setAddress(personalInformation.getAddress());
 		s.setEmail(personalInformation.getEmail());
 		s.setPhone(personalInformation.getPhone());
+		s.setColor(personalInformation.getColor());
+		s.setImage(personalInformation.getImage());
 		String error = "No se ha podido guardar";
 		if (s.getId() == 0) {
 			int id = StudentController.insert(s);
@@ -207,10 +222,14 @@ public class StudentPanel extends JPanel {
 		personalInformation.setName("");
 		personalInformation.setFirstSurname("");
 		personalInformation.setSecondSurname("");
+		personalInformation.setSexTypology(null);
 		personalInformation.setDni("");
 		personalInformation.setAddress("");
 		personalInformation.setEmail("");
 		personalInformation.setPhone("");
+		personalInformation.setColor("");
+		personalInformation.setImage(null);
+		personalInformation.setBackground(UIManager.getColor("Panel.background"));
 	}
 	
 	/**

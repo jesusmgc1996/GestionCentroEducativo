@@ -167,7 +167,7 @@ public class SubjectController {
 		List<Subject> subjects = new ArrayList<Subject>();
 		try {
 			Connection conn = ConnectionManager.getConnection();
-			PreparedStatement ps = conn.prepareStatement("select * from centroeducativo.materia");
+			PreparedStatement ps = conn.prepareStatement("select * from centroeducativo.materia order by nombre");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Subject s = new Subject();
